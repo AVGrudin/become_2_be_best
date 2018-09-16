@@ -7,4 +7,8 @@ There is project of 2 young programmers. So, let move forward and look what we w
 ПРИВЕТ ОТ СЛАВЫ
 надеюсь этот проэкт будет и в правду очень интересен (слава)
 
+Привет!
+
+ай
+привет
 Привет! (Дима)
