@@ -7,32 +7,58 @@
 Сдача:
   + данный документ должен быть сохранен в GitHUB не позднее 16 сентября 2018 до 20:59
 
-1.1) НАЗВАНИЕ ИГРЫ
+maze = list()
+from tkinter import *
+list1 = [1, 1, 1, 1]
+list2 = [1, 0, 0, 1]
+list3 = [1, 1, 2, 1]
+list4 = [1, 10, 0, 1]
+list5 = [1, 1, 1, 1]
+maze.append(list1)
+maze.append(list2)
+maze.append(list3)
+maze.append(list4)
+maze.append(list5)
+print(maze)
+end = 10
+start = 2
+wall = 1
+position = []
+end_position = end
 
-1.2) ЦЕЛЬ ИГРЫ
+def keyboard_event(event):
+    if event.keysym == 'Up':
+        new_position = position[1] + 1
+        if new_position != wall:
+            position = new_position
+            if position == end_position:
+                print(" we win!!!!!")
+    if event.keysym == 'Down':
+        new_position = position[1] - 1
+        if new_position != wall:
+            position = new_position
+            if position == end_position:
+                print(" we win!!!!!")
+    if event.keysym == 'Left':
+        new_position = position[2] - 1
+        if new_position != wall:
+            position = new_position
+            if position == end_position:
+                print(" we win!!!!!")
+    if event.keysym == 'Right':
+        new_position = position[2] - 1
+        if new_position != wall:
+            position = new_position
+            if position == end_position:
+                print(" we win!!!!!")
 
-1.3) ОБЩЕЕ ОПИСАНИЕ ИГРЫ
 
 
 
-2) ПЕРСОНАЖИ ИГРЫ
+for i in range(len(maze)):
+    for j in range(len(maze[i])):
+        if maze[i][j] == start:
+            position = [i, j]
+            break
+print(position)
 
-
-
-3) ВСПОМОГАТЕЛЬНЫЕ ПЕРСОНАЖИ (их взаимодействие)
-
-
-
-4) ОБЪЕКТЫ ИГЫ И РЕАКЦИЯ НА НИХ
-
-
-
-5) РАСПОЛОЖЕНИЕ ОБЪЕКТОВ, ПЕРСОНАЖЕЙ В ИГРЕ (можно описать на примерах)
-
-
-
-6) КАК ПЕРСОНАЖ ПЕРЕДВИГАЕТСЯ ПО "МИРУ" ИГРЫ? КАК ОТКРЫВАЕТ КАРТУ?
-
-
-
-7) УПРАВЛЕНИЕ (как управляеть игроком)
