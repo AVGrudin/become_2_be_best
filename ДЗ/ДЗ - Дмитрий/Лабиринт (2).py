@@ -43,7 +43,10 @@ class Door (Sprite, Square):
 
 
 class Wall (Sprite, Square):
-    pass
+    def __init__(self, x, y, side, canvas):
+        self.id = canvas.create_rectangle(x, y, x + side, y + side)
+        self.canvas = canvas
+
 
 
 class YouWin(Sprite):
@@ -56,9 +59,9 @@ class Maze:
         for row in range(len(maze_map)):
             for column in range(len(maze_map[row])):
                 if maze_map[row][column] == 1:
-                    self.walls.append(Wall(25 * row, 25 * column, 25, canvas))
+                    self.walls.append(Wall(250 * row, 250 * column, 250, canvas))
                 elif maze_map[row][column] == 'E':
-                    self.walls.append(Door(25 * row, 25 * column, 25, canvas))
+                    self.walls.append(Door(250 * row, 250 * column, 250, canvas))
 
 
     def update(self):
@@ -90,4 +93,4 @@ maze = Maze(maze_map, c)
 
 
 while True:
-    pass
+    window.update()
