@@ -1,3 +1,9 @@
+from tkinter import *
+
+
+class Square:
+    def intersect(self, square):
+        return false
 
 
 class Sprite:
@@ -16,7 +22,34 @@ class Sprite:
     def move_right(self):
         pass
 
-    def event_listener(event)
+    def event_listener(self, event):
+        pass
+
+    def can_go_on(self):
+        pass
+
+
+class Player (Sprite, Square):
+    pass
+
+
+class Door (Sprite, Square):
+    def __init__(self, x, y, side, canvas):
+        self.id = canvas.create_rectangle(x, y, x + side, y + side)
+        self.canvas = canvas
+
+    def can_go_on(self):
+        return True
+
+
+class Wall (Sprite, Square):
+    pass
+
+
+
+
+class YouWin(Sprite):
+    pass
 
 
 class Maze:
