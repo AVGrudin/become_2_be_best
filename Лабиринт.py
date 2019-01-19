@@ -46,15 +46,20 @@ class Wall (Sprite, Square):
     pass
 
 
-
-
 class YouWin(Sprite):
     pass
 
 
 class Maze:
-    def __init__(self, maze_map):
-        pass
+    def __init__(self, maze_map, canvas):
+        self.walls = []
+        for row in range(len(maze_map)):
+            for column in range(len(maze_map[row])):
+                if maze_map[row][column] == 1:
+                    self.walls.append(Wall(25 * row, 25 * column, 25, canvas))
+                elif maze_map[row][column] == 'E':
+                    self.walls.append(Door(25 * row, 25 * column, 25, canvas))
+
 
     def update(self):
         pass
@@ -81,7 +86,7 @@ window = Tk()
 window.title('Bubbles')
 c = Canvas(window, width=WIDTH, height=HEIGHT, bg='blue')
 c.pack()
-maze = Maze(window, maze_map, c)
+maze = Maze(maze_map, c)
 
 
 while True:
