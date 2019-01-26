@@ -41,9 +41,6 @@ class Sprite:
     def move_right(self):
         pass
 
-    def event_listener(self, event):
-        pass
-
     def can_go_on(self):
         return True
 
@@ -73,10 +70,6 @@ class Player (Sprite, Square):
         if self.maze.is_empty_cell(self.right_square()):
             self.x = self.right_square().x
             self.canvas.move(self.id, self.size, 0)
-
-    def event_listener(self, event):
-        # не реализовываем
-        pass
 
 
 class Door (Sprite, Square):
