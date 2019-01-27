@@ -71,6 +71,12 @@ class Player (Sprite, Square):
             self.x = self.right_square().x
             self.canvas.move(self.id, self.size, 0)
 
+    def control(self):
+        pass
+
+    def can_go_on(self):
+        return True
+
 
 class Door (Sprite, Square):
     def __init__(self, x, y, side, canvas):
@@ -83,8 +89,6 @@ class Door (Sprite, Square):
         self.canvas.delete(self.id_squre)
         self.canvas.delete(self.id_circle)
 
-    def can_go_on(self):
-        return True
 
 
 class Wall (Sprite, Square):
