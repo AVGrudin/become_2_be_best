@@ -114,8 +114,7 @@ class YouWin(Sprite):
         xOffset = (self.width / 2) - ((coords[2] - coords[0]) / 2)
         yOffset = (self.height / 2) - ((coords[3] - coords[1]) / 2)
         self.canvas.move(self.id, xOffset, yOffset)
-        # если не понимаете что происходит, начните смотреть на значения и результаты вычислений
-        # print(xOffset, yOffset, self.width, self.height)
+
 
     def __del__(self):
         self.canvas.delete(self.id)
