@@ -1,6 +1,44 @@
 from tkinter import *
 import time
 
+# # TODO: Нужно сделать методы класса Circle, заменить Square на Circle.
+# Также сделать и то, чтобы выводились круги, а не квадраты
+
+
+class Circle:
+    # это конструктор (специальный метод) он всегда работает, когда вы
+    # создаете объект данного класса c = Circle(x, y, r)
+    def __init__(self,x, y, radius):
+        # self.x = ???
+        # self.y = ???
+        # self.r = ???
+        pass
+
+    def intersects(self, square):
+        # Данный метод должен возвращать значение True или False
+        # True -- когда self пересекается со square.
+        # Подсказка: может быть проще, чем использовать формулу, но нужно подумать.
+        return True
+
+    # Метод возвращает круг выше себя. Чтобы лучше понять на листочке в клетку
+    # нарисуйте круг и нарисуйте возвращаемый круг, подумайте какие параметры у
+    # него должны быть, чтобы передать их при создании
+    def above(self):
+        return Circle(self.x, self.y - self.size, self.size)
+
+    # Метод возвращаем круг ниже себя
+    def under(self):
+        return Circle(self.x, self.y + self.size, self.size)
+
+    # Метод возвращаем круг правее себя
+    def right(self):
+        return Circle(self.x + self.size, self.y, self.size)
+
+    # Метод возвращаем круг левее себя
+    def left(self):
+        return Circle(self.x - self.size, self.y, self.size)
+
+
 class Square:
     def __init__(self, x, y, size):
         self.x = x
@@ -44,6 +82,7 @@ class Sprite:
     def can_go_on(self):
         return True
 
+
 class Player (Sprite, Square):
     def __init__(self, x, y, side, maze, canvas):
         Square.__init__(self, x, y, side)
@@ -70,12 +109,6 @@ class Player (Sprite, Square):
         if self.maze.is_empty_cell(self.right_square()):
             self.x = self.right_square().x
             self.canvas.move(self.id, self.size, 0)
-
-    def control(self):
-        pass
-
-    def can_go_on(self):
-        return True
 
 
 class Door (Sprite, Square):
@@ -152,8 +185,9 @@ class Maze:
 def getPlayerPos(maze_map):
     for row in range(len(maze_map)):
         for column in range(len(maze_map[row])):
-            if maze_map[row][column] == "S": return (row, column)
-    return (0, 0)
+            if maze_map[row][column] == "S": return row, column
+    return 0, 0
+
 
 maze_map = [[1, 1, 1, 1, 1],
             [1,'E', 0, 0, 1],
@@ -172,8 +206,8 @@ window.update()
 
 maze = Maze(maze_map, c)
 
-pos = getPlayerPos(maze_map)
-player = Player(pos[1] * 20, pos[0] * 20, 20, maze, c)
+x, y = getPlayerPos(maze_map)
+player = Player(y * 20, x * 20, 20, maze, c)
 
 window.bind('<Left>', lambda event: player.move_left())
 window.bind('<Right>', lambda event: player.move_right())
