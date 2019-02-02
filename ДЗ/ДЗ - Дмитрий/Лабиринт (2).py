@@ -89,6 +89,8 @@ class Door (Sprite, Square):
         self.canvas.delete(self.id_squre)
         self.canvas.delete(self.id_circle)
 
+    def can_go_on(self):
+        return True
 
 
 class Wall (Sprite, Square):
