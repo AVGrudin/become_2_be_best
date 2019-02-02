@@ -8,35 +8,33 @@ import time
 class Circle:
     # это конструктор (специальный метод) он всегда работает, когда вы
     # создаете объект данного класса c = Circle(x, y, r)
-    def __init__(self,x, y, radius):
-        # self.x = ???
-        # self.y = ???
-        # self.r = ???
-        pass
+    def __init__(self,x, y, radius, c):
+         self.x = x
+         self.y = y
+         self.r = radius
+         self.c = c
+         self.c.create_oval(x, y, x+ side, y + side)
 
     def intersects(self, square):
-        # Данный метод должен возвращать значение True или False
-        # True -- когда self пересекается со square.
-        # Подсказка: может быть проще, чем использовать формулу, но нужно подумать.
-        return True
+        return self.x == square.x and self.y == square.y
 
     # Метод возвращает круг выше себя. Чтобы лучше понять на листочке в клетку
     # нарисуйте круг и нарисуйте возвращаемый круг, подумайте какие параметры у
     # него должны быть, чтобы передать их при создании
     def above(self):
-        return Circle(self.x, self.y - self.size, self.size)
+        return Circle(self.x, self.y - self.size, self.size, self.c)
 
     # Метод возвращаем круг ниже себя
     def under(self):
-        return Circle(self.x, self.y + self.size, self.size)
+        return Circle(self.x, self.y + self.size, self.size, self.c)
 
     # Метод возвращаем круг правее себя
     def right(self):
-        return Circle(self.x + self.size, self.y, self.size)
+        return Circle(self.x + self.size, self.y, self.size, self.c)
 
     # Метод возвращаем круг левее себя
     def left(self):
-        return Circle(self.x - self.size, self.y, self.size)
+        return Circle(self.x - self.size, self.y, self.size, self.c)
 
 
 class Square:
@@ -185,8 +183,9 @@ class Maze:
 def getPlayerPos(maze_map):
     for row in range(len(maze_map)):
         for column in range(len(maze_map[row])):
-            if maze_map[row][column] == "S": return row, column
-    return 0, 0
+            if maze_map[row][column] == "S":
+                return row, column
+
 
 
 maze_map = [[1, 1, 1, 1, 1],
