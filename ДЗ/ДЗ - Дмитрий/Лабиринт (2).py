@@ -127,11 +127,11 @@ class Door (Sprite, Square):
 class Wall (Sprite, Square):
     def __init__(self, x, y, side, canvas):
         Square.__init__(self, x, y, side)
-        self.id = canvas.create_rectangle(x, y, x + side, y + side, fill="green")
+        self.id = c.create_oval(x, y, x + side, y + side, fill="green")
         self.canvas = canvas
 
-    def __del__(self):
-        self.canvas.delete(self.id)
+    #def __del__(self):
+    #    self.canvas.delete(self.id)
 
     def can_go_on(self):
         return False
@@ -161,9 +161,9 @@ class Maze:
         for row in range(len(maze_map)):
             for column in range(len(maze_map[row])):
                 if maze_map[row][column] == 1:
-                    self.walls.append(Wall(20 * column, 20 * row, 20, canvas))
+                    self.walls.append(Wall(20 * column, 20 * row, 20, canvas = canvas))
                 elif maze_map[row][column] == 'E':
-                    self.door = Door(20 * column, 20 * row, 20, canvas)
+                    self.door = Door(20 * column, 20 * row, 20, canvas = canvas)
 
     def __del__(self):
         del self.walls
