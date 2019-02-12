@@ -1,64 +1,35 @@
 from tkinter import *
 import time
 
-# # TODO: Нужно сделать методы класса Circle, заменить Square на Circle.
+# # TODO: Нужно сделать методы класса Circle, заменить Circle на Circle.
 # Также сделать и то, чтобы выводились круги, а не квадраты
 
 
+
+
+
 class Circle:
-    # это конструктор (специальный метод) он всегда работает, когда вы
-    # создаете объект данного класса c = Circle(x, y, r)
-    def __init__(self,x, y, radius, c):
-         self.x = x
-         self.y = y
-         self.r = radius
-         self.c = c
-         self.c.create_oval(x, y, x+ side, y + side)
-
-    def intersects(self, square):
-        return self.x == square.x and self.y == square.y
-
-    # Метод возвращает круг выше себя. Чтобы лучше понять на листочке в клетку
-    # нарисуйте круг и нарисуйте возвращаемый круг, подумайте какие параметры у
-    # него должны быть, чтобы передать их при создании
-    def above(self):
-        return Circle(self.x, self.y - self.size, self.size, self.c)
-
-    # Метод возвращаем круг ниже себя
-    def under(self):
-        return Circle(self.x, self.y + self.size, self.size, self.c)
-
-    # Метод возвращаем круг правее себя
-    def right(self):
-        return Circle(self.x + self.size, self.y, self.size, self.c)
-
-    # Метод возвращаем круг левее себя
-    def left(self):
-        return Circle(self.x - self.size, self.y, self.size, self.c)
-
-
-class Square:
     def __init__(self, x, y, size):
         self.x = x
         self.y = y
         self.size = size
 
-    def intersects(self, square):
+    def intersects(self, Circle):
         # при условии, что игрок всегда перемещается на длину своей стороны
         # все объекты (стены, двери, игрок) находятся в матрице
-        return self.x == square.x and self.y == square.y
+        return self.x == Circle.x and self.y == Circle.y
 
-    def above_square(self):
-        return Square(self.x, self.y - self.size, self.size)
+    def above_Circle(self):
+        return Circle(self.x, self.y - self.size, self.size)
 
-    def under_square(self):
-        return Square(self.x, self.y + self.size, self.size)
+    def under_Circle(self):
+        return Circle(self.x, self.y + self.size, self.size)
 
-    def right_square(self):
-        return Square(self.x + self.size, self.y, self.size)
+    def right_Circle(self):
+        return Circle(self.x + self.size, self.y, self.size)
 
-    def left_square(self):
-        return Square(self.x - self.size, self.y, self.size)
+    def left_Circle(self):
+        return Circle(self.x - self.size, self.y, self.size)
 
 
 class Sprite:
@@ -81,39 +52,38 @@ class Sprite:
         return True
 
 
-class Player (Sprite, Square):
+class Player (Sprite, Circle):
     def __init__(self, x, y, side, maze, canvas):
-        Square.__init__(self, x, y, side)
-        self.id = canvas.create_rectangle(x, y, x + side, y + side, fill="yellow")
+        Circle.__init__(self, x, y, side)
+        self.id = canvas.create_oval(x, y, x + side, y + side, fill="yellow")
         self.canvas = canvas
         self.maze = maze
 
     def move_up(self):
-        if self.maze.is_empty_cell(self.above_square()):
-            self.y = self.above_square().y
+        if self.maze.is_empty_cell(self.above_Circle()):
+            self.y = self.above_Circle().y
             self.canvas.move(self.id, 0, -self.size)
 
     def move_down(self):
-        if self.maze.is_empty_cell(self.under_square()):
-            self.y = self.under_square().y
+        if self.maze.is_empty_cell(self.under_Circle()):
+            self.y = self.under_Circle().y
             self.canvas.move(self.id, 0, self.size)
 
     def move_left(self):
-        if self.maze.is_empty_cell(self.left_square()):
-            self.x = self.left_square().x
+        if self.maze.is_empty_cell(self.left_Circle()):
+            self.x = self.left_Circle().x
             self.canvas.move(self.id, -self.size, 0)
 
     def move_right(self):
-        if self.maze.is_empty_cell(self.right_square()):
-            self.x = self.right_square().x
+        if self.maze.is_empty_cell(self.right_Circle()):
+            self.x = self.right_Circle().x
             self.canvas.move(self.id, self.size, 0)
 
 
-class Door (Sprite, Square):
+class Door (Sprite, Circle):
     def __init__(self, x, y, side, canvas):
-        Square.__init__(self, x, y, side)
-        self.id_squre = canvas.create_rectangle(x, y, x + side, y + side, fill="grey")
-        self.id_circle = canvas.create_oval(x, y, x+ side, y + side )
+        Circle.__init__(self, x, y, side)
+        self.id_circle = canvas.create_oval(x, y, x+ side, y + side, fill = "grey")
         self.canvas = canvas
 
     def __del__(self):
@@ -124,9 +94,9 @@ class Door (Sprite, Square):
         return True
 
 
-class Wall (Sprite, Square):
+class Wall (Sprite, Circle):
     def __init__(self, x, y, side, canvas):
-        Square.__init__(self, x, y, side)
+        Circle.__init__(self, x, y, side)
         self.id = c.create_oval(x, y, x + side, y + side, fill="green")
         self.canvas = canvas
 
@@ -171,13 +141,13 @@ class Maze:
     def update(self):
         pass
 
-    def is_empty_cell(self, square):
+    def is_empty_cell(self, Circle):
         for wall in self.walls:
-            if wall.intersects(square): return wall.can_go_on()
+            if wall.intersects(Circle): return wall.can_go_on()
         return True
 
-    def stays_on_door(self, square):
-        return self.door.intersects(square)
+    def stays_on_door(self, Circle):
+        return self.door.intersects(Circle)
 
 
 def getPlayerPos(maze_map):
