@@ -19,16 +19,16 @@ class Circle:
         # все объекты (стены, двери, игрок) находятся в матрице
         return self.x == Circle.x and self.y == Circle.y
 
-    def above_Circle(self):
+    def above_circle(self):
         return Circle(self.x, self.y - self.size, self.size)
 
-    def under_Circle(self):
+    def under_circle(self):
         return Circle(self.x, self.y + self.size, self.size)
 
-    def right_Circle(self):
+    def right_circle(self):
         return Circle(self.x + self.size, self.y, self.size)
 
-    def left_Circle(self):
+    def left_circle(self):
         return Circle(self.x - self.size, self.y, self.size)
 
 
@@ -60,23 +60,23 @@ class Player (Sprite, Circle):
         self.maze = maze
 
     def move_up(self):
-        if self.maze.is_empty_cell(self.above_Circle()):
-            self.y = self.above_Circle().y
+        if self.maze.is_empty_cell(self.above_circle()):
+            self.y = self.above_circle().y
             self.canvas.move(self.id, 0, -self.size)
 
     def move_down(self):
-        if self.maze.is_empty_cell(self.under_Circle()):
-            self.y = self.under_Circle().y
+        if self.maze.is_empty_cell(self.under_circle()):
+            self.y = self.under_circle().y
             self.canvas.move(self.id, 0, self.size)
 
     def move_left(self):
-        if self.maze.is_empty_cell(self.left_Circle()):
-            self.x = self.left_Circle().x
+        if self.maze.is_empty_cell(self.left_circle()):
+            self.x = self.left_circle().x
             self.canvas.move(self.id, -self.size, 0)
 
     def move_right(self):
-        if self.maze.is_empty_cell(self.right_Circle()):
-            self.x = self.right_Circle().x
+        if self.maze.is_empty_cell(self.right_circle()):
+            self.x = self.right_circle().x
             self.canvas.move(self.id, self.size, 0)
 
 
