@@ -16,12 +16,39 @@ player_points = 0
 player_speed = 10
 
 #-----------------------------------------------------------------------------------------------------------------------
+from random import randint
 
 
-enemies_rectangle_id = list()
+enemies = list()
 enemies_col = "purple"
-enemies_num_in_team = 10
+enemies_speed = 1
 
+def create_enemy():
+    x =390
+    y = randint(10,390)
+    id2 = c.create_rectangle(x, y, x - 20, y - 10, fill=enemies_col)
+    enemies.append(id2)
+
+
+def move_enemy():
+    for i in range(len(enemies)):
+        c.move(enemies[i], -enemies_speed, 0)
+
+
+def del_enemy(i):
+    c.delete(enemies[i])
+    del enemies[i]
+
+
+def clean_up_enemy():
+    if len(enemies) > 0:
+        for i in range(len(enemies) - 1, -1, -1):
+            if i > 0 or i == 0 and i < len(enemies) and i != len(enemies):
+                u = [len(enemies), i]
+                print(u)
+                x, y = get_coords(enemies[i])
+                if x < 0:
+                    del_enemy(i)
 
 #-----------------------------------------------------------------------------------------------------------------------
 
@@ -49,9 +76,10 @@ def del_bullet(i):
 
 def clean_up_bullet():
     for i in range(len(bullets)-1, -1, -1):
-        x, y = get_coords(bullets[i])
-        if x > 500:
-            del_bullet(i)
+        if len(enemies) > 0:
+            x, y = get_coords(bullets[i])
+            if x > 400:
+                del_bullet(i)
 
 
 
@@ -65,16 +93,16 @@ player_id = c.create_polygon(player_x, player_y, 5, 25, 30, 15, fill = player_co
 
 def move_player(event):
     if event.keysym == 'Up':
-        move(0, -1)
+        move(-1)
 
     elif event.keysym == 'Down':
-        move(0, 1)
+        move(1)
 
 
 c.bind_all('<Key>', move_player)
 
 
-def move(dx, dy):
+def move(dy):
     x, y = get_coords(player_id)
     dy_speed = dy * player_speed
     if y + dy_speed > 10 and y + dy_speed < 390:
@@ -95,9 +123,15 @@ while True:
     move_bullet()
     if randint(0,100) == 2:
         create_bullet()
+    if randint(0,100) == 2:
+        create_enemy()
     window.update()
+    move_enemy()
+    if len(enemies) > 0:
+         clean_up_enemy()
     clean_up_bullet()
-    print(len(bullets))
+
+
     sleep(0.01)
 
 
