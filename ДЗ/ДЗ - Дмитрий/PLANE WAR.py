@@ -26,7 +26,7 @@ enemies_speed = 1
 def create_enemy():
     x =390
     y = randint(10,390)
-    id2 = c.create_rectangle(x, y, x - 20, y - 10, fill=enemies_col)
+    id2 = c.create_rectangle(x, y, x + 20, y + 10, fill=enemies_col)
     enemies.append(id2)
 
 
@@ -39,16 +39,28 @@ def del_enemy(i):
     c.delete(enemies[i])
     del enemies[i]
 
+def bullets_destroy_enemies():
+    for i in range(len(enemies) - 1, -1, -1):
+        for j in range(len(bullets) - 1, -1, -1):
+            b_pos = c.coords(bullets[j])
+            e_pos = c.coords(enemies[i])
+            b_x1 = b_pos[0]
+            b_y1 = b_pos[1]
+            b_x2 = b_pos[2]
+            b_y2 = b_pos[3]
+            e_x1 = e_pos[0]
+            e_y1 = e_pos[1]
+            e_x2 = e_pos[2]
+            e_y2 = e_pos[3]
+            if b_x2 > e_x1 and e_y1 < b_y2-10 and b_y1 < e_y2 or b_x2 > e_x1 and b_y1< e_y1 and e_y1 < b_y2+10 and b_y1+10 > e_y1 or b_x2 > e_x1 and b_y1 == e_y1 and b_y2 == e_y2:
+                del_enemy(i)
+
 
 def clean_up_enemy():
-    if len(enemies) > 0:
-        for i in range(len(enemies) - 1, -1, -1):
-            if i > 0 or i == 0 and i < len(enemies) and i != len(enemies):
-                u = [len(enemies), i]
-                print(u)
-                x, y = get_coords(enemies[i])
-                if x < 0:
-                    del_enemy(i)
+    for i in range(len(enemies) - 1, -1, -1):
+        x, y = get_coords(enemies[i])
+        if x < 0:
+            del_enemy(i)
 
 #-----------------------------------------------------------------------------------------------------------------------
 
@@ -91,15 +103,24 @@ def clean_up_bullet():
 player_id = c.create_polygon(player_x, player_y, 5, 25, 30, 15, fill = player_col)
 
 
-def move_player(event):
+def move_player_and_boom(event):
     if event.keysym == 'Up':
         move(-1)
 
     elif event.keysym == 'Down':
         move(1)
 
+    if event.keysym == 'space':
+        create_bullet()
 
-c.bind_all('<Key>', move_player)
+
+
+
+
+
+
+
+c.bind_all('<Key>', move_player_and_boom)
 
 
 def move(dy):
@@ -121,15 +142,15 @@ from random import randint
 
 while True:
     move_bullet()
-    if randint(0,100) == 2:
-        create_bullet()
+
+
     if randint(0,100) == 2:
         create_enemy()
     window.update()
     move_enemy()
-    if len(enemies) > 0:
-         clean_up_enemy()
+    clean_up_enemy()
     clean_up_bullet()
+    bullets_destroy_enemies()
 
 
     sleep(0.01)
